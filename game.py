@@ -1,4 +1,5 @@
 import pygame
+import random
 
 #Initialize
 pygame.init()
@@ -14,38 +15,42 @@ white = (255,255,255)
 disp = pygame.display.set_mode((495,880))
 pygame.display.update()
 
-game_ended = False
-
-x = 200
-y = 150
-
-x_new = 0
-y_new = 0
+game_closed = False
 
 timer = pygame.time.Clock()
 
-while not game_ended:
-    for event in pygame.event.get():
-        if(event.type == pygame.QUIT):
+while not game_closed:
+    game_ended = False
+    x = 200
+    y = 150
+
+    x_new = 0
+    y_new = 0
+    while not game_ended:
+        for event in pygame.event.get():
+            if(event.type == pygame.QUIT):
+                game_ended = True
+                game_closed = True
+            if (event.type == pygame.KEYDOWN):
+                if (event.key == pygame.K_LEFT):
+                    x_new = -10
+                    y_new = 0
+                elif event.key == pygame.K_RIGHT:
+                    x_new = 10
+                    y_new = 0
+                elif event.key == pygame.K_UP:
+                    x_new = 0
+                    y_new = -10
+                elif event.key == pygame.K_DOWN:
+                    x_new = 0
+                    y_new = 10
+        if (x >= 495 or x <= 0 or y >= 880 or y <=0):
             game_ended = True
-        if (event.type == pygame.KEYDOWN):
-            if (event.key == pygame.K_LEFT):
-                x_new = -10
-                y_new = 0
-            elif event.key == pygame.K_RIGHT:
-                x_new = 10
-                y_new = 0
-            elif event.key == pygame.K_UP:
-                x_new = 0
-                y_new = -10
-            elif event.key == pygame.K_DOWN:
-                x_new = 0
-                y_new = 10
-    x += x_new
-    y += y_new
-    disp.fill(black)
-    pygame.draw.rect(disp,white,[x,y,10,10])
-    pygame.display.update()
-    timer.tick(30)
+        x += x_new
+        y += y_new
+        disp.fill(black)
+        pygame.draw.rect(disp,white,[x,y,10,10])
+        pygame.display.update()
+        timer.tick(30)
  
 pygame.quit()
