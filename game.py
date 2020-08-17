@@ -12,6 +12,9 @@ black = (0,0,0)
 white = (255,255,255)
 green = (124,252,0)
 
+#Define Font
+score_font = pygame.font.SysFont("comicsansms", 35)
+
 #Set and Update the Dissplay
 disp = pygame.display.set_mode((495,880))
 pygame.display.update()
@@ -72,6 +75,8 @@ while not game_closed:
             pygame.draw.rect(disp,white,[x_cord, y_cord,10,10])
             snake_cords.append([x_cord, y_cord])
         pygame.draw.rect(disp,green,[food_cords[0],food_cords[1],10,10])
+        value = score_font.render("Score: " + str(snake_length), True, green)
+        disp.blit(value, [0, 0])
         pygame.display.update()
         for cords in snake_cords:
             if cords[0] == x and cords[1] == y:
