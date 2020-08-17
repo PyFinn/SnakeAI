@@ -35,6 +35,8 @@ while not game_closed:
     y_new = 0
 
     food_cords = spawn_food(495, 880)
+    snake_length = 0
+    last_cords = []
     while not game_ended:
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
@@ -55,14 +57,23 @@ while not game_closed:
                     y_new = 10
         if (x >= 495 or x <= 0 or y >= 880 or y <=0):
             game_ended = True
+        x_old = x
+        y_old = y
+        last_cords.append([x_old, y_old])
         x += x_new
         y += y_new
         disp.fill(black)
         pygame.draw.rect(disp,white,[x,y,10,10])
+        for number in range(snake_length):
+            number += 1
+            x_cord = last_cords[-(number)][0]
+            y_cord = last_cords[-(number)][1]
+            pygame.draw.rect(disp,white,[x_cord, y_cord,10,10])
         pygame.draw.rect(disp,green,[food_cords[0],food_cords[1],10,10])
         pygame.display.update()
         if (x == food_cords[0] and y == food_cords[1]):
             food_cords = spawn_food(495, 880)
+            snake_length += 1
         timer.tick(30)
  
 pygame.quit()
